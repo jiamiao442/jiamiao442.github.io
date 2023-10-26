@@ -84,8 +84,8 @@ dependencies:
     specifier: ^4.2.2
     version: 4.2.2
   inferno:
-    specifier: ^7.3.3
-    version: 7.4.11
+    specifier: ^8.2.2
+    version: 8.2.2
   inferno-create-element:
     specifier: ^7.3.3
     version: 7.4.11
@@ -1757,6 +1757,10 @@ packages:
     resolution: {integrity: sha512-60SUMPBreXrLXgvpM8kYpO0AOyMRhdRlXFX5BMQbZq1SIJCyNE56nqFQhmvREQdUJpedbGRYZ5wOyq3/F6q5Zw==}
     dev: false
 
+  /csstype@3.1.2:
+    resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
+    dev: false
+
   /cuid@2.1.8:
     resolution: {integrity: sha512-xiEMER6E7TlTPnDxrM4eRiC6TRgjNX9xzEZ5U/Se2YJKr7Mq4pJn/2XEHjl3STcSh96GmkHPcBXLES8M29wyyg==}
     deprecated: Cuid and other k-sortable and non-cryptographic ids (Ulid, ObjectId, KSUID, all UUIDs) are all insecure. Use @paralleldrive/cuid2 instead.
@@ -2530,12 +2534,25 @@ packages:
     resolution: {integrity: sha512-L7lslEQCq3IfwgT/b9zhuMf8fv6KXCNXXHZevk/WYxnqJsOWGDcKpJn0zkzXfvmj0otbB149iLUQVBq3oe2sfA==}
     dev: false
 
+  /inferno-vnode-flags@8.2.2:
+    resolution: {integrity: sha512-ZyGXfFdaBpWCrU25jf/8PqB+C53WnFzpnctCYqL80fV0rQSem3Fjb6nIHGPOJdVc81TkXSKoyoCua/Qfbtc0rw==}
+    dev: false
+
   /inferno@7.4.11:
     resolution: {integrity: sha512-N+cs33ESWI8fdToCd98yMRYl7jkLnCkJskxov3FKKlaKOvk3PRlAttbhmUaYdWXlRvt2WeXi+J4MbzNj3V6G0w==}
     requiresBuild: true
     dependencies:
       inferno-shared: 7.4.11
       inferno-vnode-flags: 7.4.11
+      opencollective-postinstall: 2.0.3
+    dev: false
+
+  /inferno@8.2.2:
+    resolution: {integrity: sha512-KyCPnsK6eEzAzC6Ulmkc2S3LQSZC6DJSLHdH4zurK2DQ7lyu7e+Q5SziG7/qKufhWtCUgTwUHVzaYk5E2BzI2Q==}
+    requiresBuild: true
+    dependencies:
+      csstype: 3.1.2
+      inferno-vnode-flags: 8.2.2
       opencollective-postinstall: 2.0.3
     dev: false
 
