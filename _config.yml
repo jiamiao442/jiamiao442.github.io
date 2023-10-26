@@ -97,11 +97,11 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: default
-theme_config:
-  theme_color:
-    primary: brown
-    accent: blue
+#theme: default
+#theme_config:
+#  theme_color:
+#    primary: brown
+#    accent: blue
 
   notice: 【💖欢迎来到本站，如果喜欢就留个言吧💖】
 
