@@ -203,7 +203,7 @@ theme_config:
 deploy:
   - type: git
     repo: git@github.com:jiamiao442/jiamiao442.github.io.git
-    branch: master
+    branch: main
 
 #
 # Restful
