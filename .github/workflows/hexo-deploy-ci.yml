@@ -36,9 +36,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Install dependencies
+          
+      - name: Install pnpm (安装 pnpm)
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.0.0
+
+      - name: Install dependencies (安装依赖)
         run: |
-          npm install -g pnpm
-          npm list -g prefix
+           pnpm install -g hexo-cli
+           pnpm ci
+           pnpm install qiniu
+
+      - name: lint (代码检查)
+        run: pnpm run lint 
+        
+
 
 
