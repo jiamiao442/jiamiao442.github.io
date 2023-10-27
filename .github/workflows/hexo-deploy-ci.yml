@@ -45,7 +45,6 @@ jobs:
       - name: Install dependencies (安装依赖)
         run: |
            pnpm install -g hexo-cli
-           pnpm ci
            pnpm install qiniu
 
       - name: lint (代码检查)
