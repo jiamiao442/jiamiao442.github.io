@@ -38,9 +38,10 @@ jobs:
           node-version: 16
       - name: Install dependencies
         run: |
-          npm install -g hexo-cli
-          npm ci
-          npm install qiniu
+          npm install -g pnpm
+          pnpm install -g hexo-cli
+          pnpm ci
+          pnpm install qiniu
 
       - name: Hexo generate
         run: hexo generate --force
