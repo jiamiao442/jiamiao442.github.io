@@ -6,9 +6,9 @@ name: Hexo Deploy CI
 on:
   # Triggers the workflow on push or pull request events but only for the server branch
   push:
-    branches: [server]
+    branches: [server1]
   pull_request:
-    branches: [server]
+    branches: [server1]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -35,12 +35,17 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 12
-      - name: Install dependencies
+          node-version: 16
+          
+      - name: Install pnpm (安装 pnpm)
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.0.0
+
+      - name: Install dependencies (安装依赖)
         run: |
-          npm install -g hexo-cli
-          npm ci
-          npm install qiniu
+           pnpm install -g hexo-cli
+           pnpm install qiniu
 
       - name: Hexo generate
         run: hexo generate --force
@@ -50,3 +55,4 @@ jobs:
           sed -i "s~git@github.com:~https://${{secrets.gh_token}}@github.com/~" _config.yml
           hexo deploy > /dev/null
           node qupload.js ${{secrets.qn_ak}} ${{secrets.qn_sk}} Zone_z0 hexo-site https://blog.jiamiao.net.cn
+        
