@@ -47,7 +47,6 @@ jobs:
            pnpm install -g hexo-cli
            pnpm install qiniu
            
-
       - name: Hexo generate
         run: hexo generate --force
 
