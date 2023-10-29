@@ -54,7 +54,7 @@ jobs:
         run: |
           sed -i "s~git@github.com:~https://${{secrets.gh_token}}@github.com/~" _config.yml
           hexo deploy > /dev/null
-          node qupload.js ${{secrets.qn_ak}} ${{secrets.qn_sk}} Zone_z0 hexo-site https://blog.jiamiao.net.cn
+          # node qupload.js ${{secrets.qn_ak}} ${{secrets.qn_sk}} Zone_z0 hexo-site https://blog.jiamiao.net.cn
         
 
 
