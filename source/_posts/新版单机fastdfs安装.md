@@ -1,4 +1,5 @@
 ---
+uuid: 5362e7b6-05d1-9948-3204-1a7bf9ba9e82
 title: 新版单机fastdfs安装
 date: 2023-10-24 15:04:45
 tags: fastdfs
