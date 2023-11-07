@@ -1,4 +1,5 @@
 ---
+uuid: 68ce3b2f-4619-ff29-620e-92c59be57317
 title: centos7部署高可用fastdfs
 date: 2023-10-24 15:04:45
 tags: fastdfs

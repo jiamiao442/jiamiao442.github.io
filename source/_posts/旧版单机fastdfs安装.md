@@ -1,4 +1,5 @@
-﻿﻿---
+﻿---
+uuid: a667d22f-0529-c0ec-06e8-8f475c54b08e
 title: docker-compose 安装fastdfs
 date: 2023-10-24 15:04:45
 tags: fastdfs
