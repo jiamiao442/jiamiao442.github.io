@@ -150,13 +150,9 @@ theme_config:
     - name: hao123
       link: //www.hao123.com
 
-<<<<<<< HEAD
+
   since: 2023
   footer_text: ' | Theme - <a href="https://github.com/jiamiao442/jiamiao442.github.io/tree/theme" target="_blank" class="mdui-text-color-theme-accent">default</a> <br/> <a href="https://beian.miit.gov.cn" target="_blank" class="mdui-text-color-theme-accent">冀ICP备2023036769号</a>'
-=======
-  since: 2016
-  footer_text: ' | Theme - <a href="https://github.com/jiamiao442/jiamiao442.github.io/tree/theme" target="_blank" class="mdui-text-color-theme-accent">default</a><br>京公网安备 <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=xxxxxxxxx" target="_blank" class="mdui-text-color-theme-accent">xxxxxxxxx</a>号 | <a href="https://beian.miit.gov.cn" target="_blank" class="mdui-text-color-theme-accent">冀ICP备2023036769号</a>'
->>>>>>> f7336b49c064f6f0a5a691c3384ec8fc729b9cdc
   license: 本文遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">CC BY-NC-SA 4.0</a> 许可协议
 
   gallery:
