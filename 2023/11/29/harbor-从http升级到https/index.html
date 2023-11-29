@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+
+  
+  <title>生产中harbor从http升级到https | 加妙独舞</title>
+
+  <link rel="shortcut icon" href="/images/favicon.jpg">
+  <link rel="alternate" href="/atom.xml" title="加妙独舞" type="application/atom+xml">
+  <meta name="description" content="生产中harbor从http升级到https Generate a Certificate Authority Certificate In a production environment, you should obtain a certificate from a CA. In a test or development environment, you can generate your">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生产中harbor从http升级到https">
+<meta property="og:url" content="https://www.jiamiao.net.cn/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/index.html">
+<meta property="og:site_name" content="加妙独舞">
+<meta property="og:description" content="生产中harbor从http升级到https Generate a Certificate Authority Certificate In a production environment, you should obtain a certificate from a CA. In a test or development environment, you can generate your">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-29T07:47:45.000Z">
+<meta property="article:modified_time" content="2023-11-29T08:29:24.709Z">
+<meta property="article:author" content="杜俊刚">
+<meta property="article:tag" content="harbor">
+<meta property="article:tag" content="http">
+<meta property="article:tag" content="https">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+
+  <meta name="keywords" content=",harbor,http,https,docker">
+  <meta name="format-detection" content="telephone=no,email=no">
+  <meta name="theme-color" content="#9C27B0">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="加妙独舞">
+  <meta name="msapplication-starturl" content="https://www.jiamiao.net.cn/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/">
+  <meta name="msapplication-navbutton-color" content="#9C27B0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="加妙独舞">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="/images/favicon.jpg">
+
+  
+    <link rel="canonical" href="https://www.jiamiao.net.cn/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/">
+  
+
+  
+  
+
+  
+  
+  
+
+  
+<link rel="stylesheet" href="/css/mdui.css">
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/custom.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-brown mdui-theme-accent-blue">
+  <script>var a=localStorage.getItem("mdui-theme-layout-dark");if(a){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(!a){document.getElementsByTagName("body")[0].className+=" mdui-drawer-body-left"};</script>
+  <header id="header" class="mdui-appbar mdui-appbar-fixed mdui-appbar-scroll-hide mdui-appbar-inset">
+  <div class="mdui-toolbar mdui-color-theme">
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#sidebar', swipe: true}"><i class="mdui-icon material-icons">menu</i></a>
+    <a href="/" class="mdui-typo-headline">加妙独舞</a>
+    <div class="mdui-toolbar-spacer"></div>
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#search'}" mdui-tooltip="{content: '搜索'}"><i class="mdui-icon material-icons">search</i></a>
+    <a href="/atom.xml" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: 'RSS'}"><i class="mdui-icon material-icons">rss_feed</i></a>
+  </div>
+</header>
+<div class="mdui-dialog" id="search">
+  
+    <div class="search-form">
+      <input type="search" class="search-form-input" placeholder="请输入关键字">
+    </div>
+    <div class="search-result" data-resource="/search.xml"></div>
+  
+</div>
+
+  <aside id="sidebar" class="mdui-drawer mdui-drawer-full-height">
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(a){document.getElementById("sidebar").className+=" mdui-drawer-close"};</script>
+  <div class="mdui-grid-tile">
+    <img src="/images/banner.jpg" style="height: 160px;">
+    <img src="/images/avatar.jpg" class="avatar-animation" style="position: absolute; top: 10%; left: 24px; width: 64px; height: 64px; border: 2px solid #fff; border-radius: 50%;">
+    <div class="mdui-grid-tile-actions">
+      <div class="mdui-grid-tile-text">
+        <div class="mdui-grid-tile-title">杜俊刚</div>
+        <div class="mdui-grid-tile-subtitle"><i class="mdui-icon material-icons">art_track</i>桃李不言，下自成蹊</div>
+      </div>
+      
+        <div class="mdui-grid-tile-buttons">
+          <a href="mailto:379289162@qq.com" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '379289162@qq.com'}"><i class="mdui-icon material-icons">email</i></a>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    <a href="/" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">home</i>
+      <div class="mdui-list-item-content">主页</div>
+    </a>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-0");if(a){document.getElementsByClassName("mdui-collapse-item")[0].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-deep-orange">archive</i>
+        <div class="mdui-list-item-content">归档</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        <a class="mdui-ripple sidebar_archives-link" href="/archives/2023/11/">十一月 2023<span class="mdui-ripple sidebar_archives-count">2</span></a><a class="mdui-ripple sidebar_archives-link" href="/archives/2023/10/">十月 2023<span class="mdui-ripple sidebar_archives-count">3</span></a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-1");if(a){document.getElementsByClassName("mdui-collapse-item")[1].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-green">class</i>
+        <div class="mdui-list-item-content">分类</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        
+        
+          <a href="javascript:;" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme mdui-ripple" style="justify-content: center;">分类为空</a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-2");if(a){document.getElementsByClassName("mdui-collapse-item")[2].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-brown">bookmark</i>
+        <div class="mdui-list-item-content">标签</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        <a class="mdui-ripple sidebar_archives-link" href="/tags/docker/" rel="tag">docker<span class="mdui-ripple sidebar_archives-count">4</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/fastdfs/" rel="tag">fastdfs<span class="mdui-ripple sidebar_archives-count">3</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/harbor/" rel="tag">harbor<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/http/" rel="tag">http<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/https/" rel="tag">https<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/k8s/" rel="tag">k8s<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/window-kubectl-k8s/" rel="tag">window, kubectl, k8s<span class="mdui-ripple sidebar_archives-count">1</span></a>
+        
+      </div>
+    </div>
+    <a href="/about" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-purple">person</i>
+      <div class="mdui-list-item-content">关于</div>
+    </a>
+  </div>
+
+  <div class="mdui-divider"></div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    
+      <a href="/timeline" class="mdui-list-item mdui-ripple">时间轴</a>
+    
+      <a href="/tagcloud" class="mdui-list-item mdui-ripple">标签云</a>
+    
+      <a href="/gallery" class="mdui-list-item mdui-ripple">相册</a>
+    
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-3");if(a){document.getElementsByClassName("mdui-collapse-item")[3].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <div class="mdui-list-item-content">友情链接</div>
+        <i class="mdui-list-item-icon mdui-icon material-icons">link</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+          <a href="//www.hao123.com" target="_blank" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme-accent mdui-ripple" style="justify-content: center;">hao123</a>
+        
+        
+      </div>
+    </div>
+  </div>
+</aside>
+
+  <main id="main" class="mdui-m-t-5 fadeIn animated">
+  
+<link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <style>#main article .mdui-card-content .center-block{display:block!important;margin-right:auto!important;margin-left:auto!important}</style>
+  <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
+  <article class="mdui-card mdui-m-b-5">
+    <header class="mdui-card-media">
+      <img src="/images/random/material-2.png" style="max-height: 240px;">
+      <div class="mdui-card-media-covered">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">生产中harbor从http升级到https</div>
+          <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2023-11-29 / <i class="iconfont">&#xe601;</i> 杜俊刚 &nbsp;&nbsp; <span id="busuanzi_container_page_pv" style="display: none;"><i class="iconfont">&#xe7fd;</i> <span id="busuanzi_value_page_pv"></span></span></div>
+        </div>
+      </div>
+      <div class="mdui-card-menu">
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#qrcode', align: 'right'}"><i class="mdui-icon material-icons">devices</i></button>
+          <ul class="mdui-menu" id="qrcode">
+            
+              <li class="mdui-menu-item"><a class="mdui-text-center mdui-ripple">发送到手机</a></li>
+            
+            <li class="mdui-menu-item" disabled>
+              
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAADi0lEQVR42u3aS27jQAwFQN//0sl2AEP2I9lUNEBpFSSO1CovHvh5/bj+uV4IcODAgQMHDhw4cOB4MMcrvpL/ev/M++evfnP1v5evEZ/qyzlx4MCBA8cCx8aD8zvkd76CHr0LDhw4cOBY4+g9Pr/D509WYzs/22cyHDhw4MDxHI4kSnsRPikUceDAgQPH/8iRBGoStL3X7lHiwIEDB477OZI4zIuxZLyUnKEXtDf1SnHgwIEDx3ih4fk/37rfgQMHDhw43jiqV2/sNFmY6/218EY4cODAgeMoRx5U1RIrv0P+9MmSBA4cOHDguJ+jF2B5e663KpGcs1dq4sCBAweOeziqETgJvMkCXH6Hz2+KAwcOHDjOciSPjG46Xo+bfz15qOPAgQMHjj2OJOR65VyvdTgP7zIcDhw4cOA4ylGNt94jq2VVtZxLYhUHDhw4cNzDERU5cXxulHz5q/bQceDAgQPHBsd8kFMt9hLW3lAqj3AcOHDgwLHBUV0gyAdIvUjO7zw5Pw4cOHDg2OOolkO9YqzaEKw+MS/5DkzhcODAgQNHwFFt8O2VXkmI9kq4wqocDhw4cOAYcFTDrBqZOdb8DM0WJw4cOHDgWOBIojQpzPJQzD8zj/BCCYcDBw4cOMYcr+BKRk29VYacpjcMiwpOHDhw4MBxlCOJyepf95p61QXr6IvBgQMHDhwLHKduXW3qJWS9U+XrFDhw4MCBY48jKe3ywc9KuTUedOHAgQMHjm2O3spCb8yTNx/zYJ6D4sCBAweODY7qC/TWFwrhV2wX5ssTX5qDOHDgwIHjFo5eM67HUWjqxSOxwtgJBw4cOHAc4qi2Bavxlg+ikpbiZJECBw4cOHDcyZEPmarjqEnQ5lF6rITDgQMHDhxHOZJ1hEkJlwdhtYBsLtXhwIEDB441jt5rVI+SrzVM1hcOBC0OHDhw4DjE0Xvh6hpEvhhRHTLlz8KBAwcOHBsc5YKnePRqO6867kq+zi+nxYEDBw4cRzma4RS3C3Oy/FSfX/hACYcDBw4cOBa6Yflo6hRKEsD5aGoUtDhw4MCB4xDHvNCqwuXrdPNG5GUA48CBAweOB3BUo7rXTMybkqOvBAcOHDhwPIYjbx3myxD5kCmPWxw4cODA8Vcc+XHz1lsvLPOAn4Q3Dhw4cODY4+g11/JIm68vVNELhSUOHDhw4DjK4cKBAwcOHDhw4MCBA8fDrl8E97CJVh4e2QAAAABJRU5ErkJggg==">
+              
+            </li>
+          </ul>
+        
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#share_menu', align: 'right'}"><i class="mdui-icon material-icons">share</i></button>
+          <ul class="mdui-menu" id="share_menu">
+            <li class="mdui-menu-item">
+              <a href="https://service.weibo.com/share/share.php?appkey=&title=生产中harbor从http升级到https&url=https://www.jiamiao.net.cn/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/&pic=https://www.jiamiao.net.cn/images/favicon.jpg&searchPic=false&style=simple" target="_blank" class="mdui-ripple">分享到 Weibo</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://twitter.com/intent/tweet?text=生产中harbor从http升级到https&url=https://www.jiamiao.net.cn/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/&via=杜俊刚" target="_blank" class="mdui-ripple">分享到 Twitter</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.jiamiao.net.cn/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/" target="_blank" class="mdui-ripple">分享到 Facebook</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://plus.google.com/share?url=https://www.jiamiao.net.cn/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/" target="_blank" class="mdui-ripple">分享到 Google+</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.jiamiao.net.cn/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/&title=生产中harbor从http升级到https" target="_blank" class="mdui-ripple">分享到 LinkedIn</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://connect.qq.com/widget/shareqq/index.html?site=加妙独舞&title=生产中harbor从http升级到https&pics=https://www.jiamiao.net.cn/images/favicon.jpg&url=https://www.jiamiao.net.cn/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/" target="_blank" class="mdui-ripple">分享到 QQ</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://telegram.me/share/url?url=https://www.jiamiao.net.cn/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/&text=生产中harbor从http升级到https" target="_blank" class="mdui-ripple">分享到 Telegram</a>
+            </li>
+          </ul>
+        
+      </div>
+    </header>
+    <div class="mdui-card-content mdui-typo">
+      <h1>生产中harbor从http升级到https</h1>
+<h2 id="Generate-a-Certificate-Authority-Certificate">Generate a Certificate Authority Certificate</h2>
+<p>In a production environment, you should obtain a certificate from a CA. In a test or development environment, you can generate your own CA. To generate a CA certficate, run the following commands.</p>
+<ol>
+<li>
+<p>Generate a CA certificate private key.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /opt/cert</span><br><span class="line"><span class="built_in">cd</span> /opt/cert</span><br><span class="line">openssl genrsa -out ca.key 4096</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Generate the CA certificate.</p>
+<p>Adapt the values in the <code>-subj</code> option to reflect your organization. If you use an FQDN to connect your Harbor host, you must specify it as the common name (<code>CN</code>) attribute.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -new -nodes -sha512 -days 3650 \</span><br><span class="line"> -subj <span class="string">&quot;/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=10.165.6.63&quot;</span> \</span><br><span class="line"> -key ca.key \</span><br><span class="line"> -out ca.crt</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Generate-a-Server-Certificate">Generate a Server Certificate</h2>
+<p>The certificate usually contains a <code>.crt</code> file and a <code>.key</code> file, for example, <code>10.165.6.63.crt</code> and <code>10.165.6.63.key</code>.</p>
+<ol>
+<li>
+<p>Generate a private key.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out 10.165.6.63.key 4096</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Generate a certificate signing request (CSR).</p>
+<p>Adapt the values in the <code>-subj</code> option to reflect your organization. If you use an FQDN to connect your Harbor host, you must specify it as the common name (<code>CN</code>) attribute and use it in the key and CSR filenames.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openssl req -sha512 -new \</span><br><span class="line">    -subj <span class="string">&quot;/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=10.165.6.63&quot;</span> \</span><br><span class="line">    -key 10.165.6.63.key \</span><br><span class="line">    -out 10.165.6.63.csr</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Generate an x509 v3 extension file.</p>
+<p>Regardless of whether you’re using either an FQDN or an IP address to connect to your Harbor host, you must create this file so that you can generate a certificate for your Harbor host that complies with the Subject Alternative Name (SAN) and x509 v3 extension requirements. Replace the <code>DNS</code> entries to reflect your domain.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; v3.ext &lt;&lt;-<span class="string">EOF</span></span><br><span class="line"><span class="string">authorityKeyIdentifier=keyid,issuer</span></span><br><span class="line"><span class="string">basicConstraints=CA:FALSE</span></span><br><span class="line"><span class="string">keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment</span></span><br><span class="line"><span class="string">extendedKeyUsage = serverAuth</span></span><br><span class="line"><span class="string">subjectAltName = @alt_names</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[alt_names]</span></span><br><span class="line"><span class="string">IP.1=10.165.6.63</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+<p>重点是[alt_names]，这里写的ip地址是最后认证的，比较重要。端口不需要，一旦认证了ip以后所有端口都可以是https的</p>
+<p>[alt_names]： 后面为备用名称列表，可以是域名、泛域名、IP地址</p>
+</li>
+<li>
+<p>Use the <code>v3.ext</code> file to generate a certificate for your Harbor host.</p>
+<p>Replace the <code>10.165.6.63</code> in the CRS and CRT file names with the Harbor host name.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -req -sha512 -days 3650 \</span><br><span class="line">    -extfile v3.ext \</span><br><span class="line">    -CA ca.crt -CAkey ca.key -CAcreateserial \</span><br><span class="line">    -<span class="keyword">in</span> 10.165.6.63.csr \</span><br><span class="line">    -out 10.165.6.63.crt</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Provide-the-Certificates-to-Harbor-and-Docker">Provide the Certificates to Harbor and Docker</h2>
+<p>After generating the <code>ca.crt</code>, <code>10.165.6.63.crt</code>, and <code>10.165.6.63.key</code> files, you must provide them to Harbor and to Docker, and reconfigure Harbor to use them.</p>
+<ol>
+<li>
+<p>Copy the server certificate and key into the certficates folder on your Harbor host.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> 10.165.6.63.crt /data/cert/</span><br><span class="line"><span class="built_in">cp</span> 10.165.6.63.key /data/cert/</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Convert <code>10.165.6.63.crt</code> to <code>10.165.6.63.cert</code>, for use by Docker.</p>
+<p>The Docker daemon interprets <code>.crt</code> files as CA certificates and <code>.cert</code> files as client certificates.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform PEM -<span class="keyword">in</span> 10.165.6.63.crt -out 10.165.6.63.cert</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Copy the server certificate, key and CA files into the Docker certificates folder on the Harbor host. You must create the appropriate folders first.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> 10.165.6.63.cert /etc/docker/certs.d/10.165.6.63/</span><br><span class="line"><span class="built_in">cp</span> 10.165.6.63.key /etc/docker/certs.d/10.165.6.63/</span><br><span class="line"><span class="built_in">cp</span> ca.crt /etc/docker/certs.d/10.165.6.63/</span><br></pre></td></tr></table></figure>
+<p>If you mapped the default <code>nginx</code> port 443 to a different port, create the folder <code>/etc/docker/certs.d/10.165.6.63:port</code>, or <code>/etc/docker/certs.d/harbor_IP:port</code>.</p>
+</li>
+<li>
+<p>Restart Docker Engine.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>You might also need to trust the certificate at the OS level. See <a target="_blank" rel="noopener" href="https://goharbor.io/docs/2.0.0/install-config/troubleshoot-installation/#https">Troubleshooting Harbor Installation</a> for more information.</p>
+<p>The following example illustrates a configuration that uses custom certificates.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/etc/docker/certs.d/</span><br><span class="line">    └── 10.165.6.63:5000</span><br><span class="line">       ├── 10.165.6.63.cert  &lt;-- Server certificate signed by CA</span><br><span class="line">       ├── 10.165.6.63.key   &lt;-- Server key signed by CA</span><br><span class="line">       └── ca.crt               &lt;-- Certificate authority that signed the registry certificate</span><br></pre></td></tr></table></figure>
+<h2 id="Deploy-or-Reconfigure-Harbor">Deploy or Reconfigure Harbor</h2>
+<p>If you have not yet deployed Harbor, see <a target="_blank" rel="noopener" href="https://goharbor.io/docs/2.0.0/install-config/configure-yml-file/">Configure the Harbor YML File</a> for information about how to configure Harbor to use the certificates by specifying the <code>hostname</code> and <code>https</code> attributes in <code>harbor.yml</code>.</p>
+<p>If you already deployed Harbor with HTTP and want to reconfigure it to use HTTPS, perform the following steps.</p>
+<ol>
+<li>
+<p>Run the <code>prepare</code> script to enable HTTPS.</p>
+<p>Harbor uses an <code>nginx</code> instance as a reverse proxy for all services. You use the <code>prepare</code> script to configure <code>nginx</code> to use HTTPS. The <code>prepare</code> is in the Harbor installer bundle, at the same level as the <code>install.sh</code> script.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./prepare</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>If Harbor is running, stop and remove the existing instance.</p>
+<p>Your image data remains in the file system, so no data is lost.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose down -v</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Restart Harbor:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Verify-the-HTTPS-Connection">Verify the HTTPS Connection</h2>
+<p>After setting up HTTPS for Harbor, you can verify the HTTPS connection by performing the following steps.</p>
+<ul>
+<li>
+<p>Open a browser and enter <a target="_blank" rel="noopener" href="https://10.165.6.63/">https://10.165.6.63</a>. It should display the Harbor interface.</p>
+<p>Some browsers might show a warning stating that the Certificate Authority (CA) is unknown. This happens when using a self-signed CA that is not from a trusted third-party CA. You can import the CA to the browser to remove the warning.</p>
+</li>
+<li>
+<p>On a machine that runs the Docker daemon, check the <code>/etc/docker/daemon.json</code> file to make sure that the <code>-insecure-registry</code> option is not set for <a target="_blank" rel="noopener" href="https://10.165.6.63/">https://10.165.6.63</a>.</p>
+</li>
+<li>
+<p>Log into Harbor from the Docker client.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login 10.165.6.63:5000</span><br></pre></td></tr></table></figure>
+<p>If you’ve mapped <code>nginx</code> 443 port to a different port,add the port in the <code>login</code> command.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login 10.165.6.63:5000</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id=""></h2>
+<p>升级完成。</p>
+
+      
+      <blockquote>
+        
+          <strong>本文遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">CC BY-NC-SA 4.0</a> 许可协议</strong><br>
+        
+        <strong>本文链接：</strong><br><a href="https://www.jiamiao.net.cn/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/">https://www.jiamiao.net.cn/2023/11/29/harbor-从http升级到https/</a>
+      </blockquote>
+    </div>
+    <footer class="mdui-card-actions">
+      
+      
+        <a class="mdui-ripple article_tags-link" href="/tags/docker/" rel="tag">docker</a><a class="mdui-ripple article_tags-link" href="/tags/harbor/" rel="tag">harbor</a><a class="mdui-ripple article_tags-link" href="/tags/http/" rel="tag">http</a><a class="mdui-ripple article_tags-link" href="/tags/https/" rel="tag">https</a>
+      
+    </footer>
+    
+  </article>
+  
+<script src="//cdn.bootcdn.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+  <script>$("#main article .mdui-card-content img.fancybox").on("click",function(e){$.fancybox.open({src:$(this).attr("src")});});</script>
+
+
+  <nav id="paginator">
+    
+    <div class="spacer"></div>
+    
+      <a rel="next" class="extend next" href="/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/">
+        <span class="mdui-p-x-3" mdui-tooltip="{content: 'window下kubectl访问k8s集群'}">下一篇</span>
+        <button aria-label="next" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_forward</i></button>
+      </a>
+    
+  </nav>
+
+
+  <div id="comment" class="mdui-m-t-5">
+    <div id="gitalk-container"></div>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: 'jiamiao442.github.io',
+    owner: 'jiamiao442',
+    admin: ['jiamiao442'],
+    id: 'b9bceb46-0d45-1083-4e83-b2b12a0c4f1e' || location.pathname,
+    distractionFreeMode: false
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  </div>
+
+
+
+
+</main>
+  <footer id="footer" class="mdui-m-t-5 mdui-p-y-3 mdui-color-theme">
+  <div class="mdui-p-y-0 mdui-text-center">
+    
+    
+    
+    
+    
+    
+    
+      <a href="https://github.com/jiamiao442" target="_blank" class="mdui-btn mdui-btn-icon mdui-text-color-theme-a100"><i class="mdui-icon iconfont">&#xe7ab;</i></a>
+    
+    
+    
+    
+    
+      <a href="tencent://message/?uin=379289162&Menu=yes" target="_blank" class="mdui-btn mdui-btn-icon mdui-text-color-theme-a100"><i class="mdui-icon iconfont">&#xe651;</i></a>
+    
+    
+  </div>
+  <div class="mdui-p-y-1 mdui-text-center">
+    Copyright &copy; 2023 - 2023 杜俊刚<br>
+    Powered by <a href="https://hexo.io/" target="_blank" class="mdui-text-color-theme-accent">Hexo</a> | Theme - <a href="https://github.com/jiamiao442/jiamiao442.github.io/tree/theme" target="_blank" class="mdui-text-color-theme-accent">default</a> <br/> <img src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png"  style="width: 16px;"> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=13010502002248" target="_blank" class="mdui-text-color-theme-accent">冀公网安备13010502002248号 </a> | <a href="https://beian.miit.gov.cn" target="_blank" class="mdui-text-color-theme-accent">冀ICP备2023036769号</a>
+    <br>
+      <span id="busuanzi_container_site_pv" style="display: none;"><i class="iconfont">&#xe7fd;</i> <span id="busuanzi_value_site_pv"></span></span> &nbsp;&nbsp;
+      <span id="busuanzi_container_site_uv" style="display: none;"><i class="iconfont">&#xe601;</i> <span id="busuanzi_value_site_uv"></span></span>
+    
+  </div>
+</footer>
+
+  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_upward</i></button>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+<script src="/js/mdui.js"></script>
+<script src="/js/script.js"></script>
+
+  
+<script src="/custom.js"></script>
+
+</body>
+</html>

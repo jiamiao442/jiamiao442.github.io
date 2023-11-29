@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+
+  
+  <title>docker-compose 安装fastdfs | 加妙独舞</title>
+
+  <link rel="shortcut icon" href="/images/favicon.jpg">
+  <link rel="alternate" href="/atom.xml" title="加妙独舞" type="application/atom+xml">
+  <meta name="description" content="1, 配置docker-compose.yml mkdir -p &#x2F;opt&#x2F;fastdfs cd &#x2F;opt&#x2F;fastdfs vi docker-compose.yml 12345678910111213141516171819202122232425262728293031323334353637version: &amp;#x27;2&amp;#x27;services:    fastdfs-tracker:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker-compose 安装fastdfs">
+<meta property="og:url" content="https://www.jiamiao.net.cn/2023/10/24/%E6%97%A7%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="加妙独舞">
+<meta property="og:description" content="1, 配置docker-compose.yml mkdir -p &#x2F;opt&#x2F;fastdfs cd &#x2F;opt&#x2F;fastdfs vi docker-compose.yml 12345678910111213141516171819202122232425262728293031323334353637version: &amp;#x27;2&amp;#x27;services:    fastdfs-tracker:">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-10-24T07:04:45.000Z">
+<meta property="article:modified_time" content="2023-11-29T08:29:24.709Z">
+<meta property="article:author" content="杜俊刚">
+<meta property="article:tag" content="fastdfs">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+
+  <meta name="keywords" content=",fastdfs,docker">
+  <meta name="format-detection" content="telephone=no,email=no">
+  <meta name="theme-color" content="#9C27B0">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="加妙独舞">
+  <meta name="msapplication-starturl" content="https://www.jiamiao.net.cn/2023/10/24/%E6%97%A7%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/">
+  <meta name="msapplication-navbutton-color" content="#9C27B0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="加妙独舞">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="/images/favicon.jpg">
+
+  
+    <link rel="canonical" href="https://www.jiamiao.net.cn/2023/10/24/%E6%97%A7%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/">
+  
+
+  
+  
+
+  
+  
+  
+
+  
+<link rel="stylesheet" href="/css/mdui.css">
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/custom.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-brown mdui-theme-accent-blue">
+  <script>var a=localStorage.getItem("mdui-theme-layout-dark");if(a){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(!a){document.getElementsByTagName("body")[0].className+=" mdui-drawer-body-left"};</script>
+  <header id="header" class="mdui-appbar mdui-appbar-fixed mdui-appbar-scroll-hide mdui-appbar-inset">
+  <div class="mdui-toolbar mdui-color-theme">
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#sidebar', swipe: true}"><i class="mdui-icon material-icons">menu</i></a>
+    <a href="/" class="mdui-typo-headline">加妙独舞</a>
+    <div class="mdui-toolbar-spacer"></div>
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#search'}" mdui-tooltip="{content: '搜索'}"><i class="mdui-icon material-icons">search</i></a>
+    <a href="/atom.xml" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: 'RSS'}"><i class="mdui-icon material-icons">rss_feed</i></a>
+  </div>
+</header>
+<div class="mdui-dialog" id="search">
+  
+    <div class="search-form">
+      <input type="search" class="search-form-input" placeholder="请输入关键字">
+    </div>
+    <div class="search-result" data-resource="/search.xml"></div>
+  
+</div>
+
+  <aside id="sidebar" class="mdui-drawer mdui-drawer-full-height">
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(a){document.getElementById("sidebar").className+=" mdui-drawer-close"};</script>
+  <div class="mdui-grid-tile">
+    <img src="/images/banner.jpg" style="height: 160px;">
+    <img src="/images/avatar.jpg" class="avatar-animation" style="position: absolute; top: 10%; left: 24px; width: 64px; height: 64px; border: 2px solid #fff; border-radius: 50%;">
+    <div class="mdui-grid-tile-actions">
+      <div class="mdui-grid-tile-text">
+        <div class="mdui-grid-tile-title">杜俊刚</div>
+        <div class="mdui-grid-tile-subtitle"><i class="mdui-icon material-icons">art_track</i>桃李不言，下自成蹊</div>
+      </div>
+      
+        <div class="mdui-grid-tile-buttons">
+          <a href="mailto:379289162@qq.com" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '379289162@qq.com'}"><i class="mdui-icon material-icons">email</i></a>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    <a href="/" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">home</i>
+      <div class="mdui-list-item-content">主页</div>
+    </a>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-0");if(a){document.getElementsByClassName("mdui-collapse-item")[0].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-deep-orange">archive</i>
+        <div class="mdui-list-item-content">归档</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        <a class="mdui-ripple sidebar_archives-link" href="/archives/2023/11/">十一月 2023<span class="mdui-ripple sidebar_archives-count">2</span></a><a class="mdui-ripple sidebar_archives-link" href="/archives/2023/10/">十月 2023<span class="mdui-ripple sidebar_archives-count">3</span></a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-1");if(a){document.getElementsByClassName("mdui-collapse-item")[1].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-green">class</i>
+        <div class="mdui-list-item-content">分类</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        
+        
+          <a href="javascript:;" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme mdui-ripple" style="justify-content: center;">分类为空</a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-2");if(a){document.getElementsByClassName("mdui-collapse-item")[2].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-brown">bookmark</i>
+        <div class="mdui-list-item-content">标签</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        <a class="mdui-ripple sidebar_archives-link" href="/tags/docker/" rel="tag">docker<span class="mdui-ripple sidebar_archives-count">4</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/fastdfs/" rel="tag">fastdfs<span class="mdui-ripple sidebar_archives-count">3</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/harbor/" rel="tag">harbor<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/http/" rel="tag">http<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/https/" rel="tag">https<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/k8s/" rel="tag">k8s<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/window-kubectl-k8s/" rel="tag">window, kubectl, k8s<span class="mdui-ripple sidebar_archives-count">1</span></a>
+        
+      </div>
+    </div>
+    <a href="/about" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-purple">person</i>
+      <div class="mdui-list-item-content">关于</div>
+    </a>
+  </div>
+
+  <div class="mdui-divider"></div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    
+      <a href="/timeline" class="mdui-list-item mdui-ripple">时间轴</a>
+    
+      <a href="/tagcloud" class="mdui-list-item mdui-ripple">标签云</a>
+    
+      <a href="/gallery" class="mdui-list-item mdui-ripple">相册</a>
+    
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-3");if(a){document.getElementsByClassName("mdui-collapse-item")[3].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <div class="mdui-list-item-content">友情链接</div>
+        <i class="mdui-list-item-icon mdui-icon material-icons">link</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+          <a href="//www.hao123.com" target="_blank" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme-accent mdui-ripple" style="justify-content: center;">hao123</a>
+        
+        
+      </div>
+    </div>
+  </div>
+</aside>
+
+  <main id="main" class="mdui-m-t-5 fadeIn animated">
+  
+<link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <style>#main article .mdui-card-content .center-block{display:block!important;margin-right:auto!important;margin-left:auto!important}</style>
+  <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
+  <article class="mdui-card mdui-m-b-5">
+    <header class="mdui-card-media">
+      <img src="/images/random/material-4.png" style="max-height: 240px;">
+      <div class="mdui-card-media-covered">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">docker-compose 安装fastdfs</div>
+          <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2023-10-24 / <i class="iconfont">&#xe601;</i> 杜俊刚 &nbsp;&nbsp; <span id="busuanzi_container_page_pv" style="display: none;"><i class="iconfont">&#xe7fd;</i> <span id="busuanzi_value_page_pv"></span></span></div>
+        </div>
+      </div>
+      <div class="mdui-card-menu">
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#qrcode', align: 'right'}"><i class="mdui-icon material-icons">devices</i></button>
+          <ul class="mdui-menu" id="qrcode">
+            
+              <li class="mdui-menu-item"><a class="mdui-text-center mdui-ripple">发送到手机</a></li>
+            
+            <li class="mdui-menu-item" disabled>
+              
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAADkUlEQVR42u3ay27bQBAEQP//TyfXAIap7p1ZWQGKJ8OmRW7p0JjH1x/XP9cXAhw4cODAgQMHDhw4PpjjK76+3//TJ3z//Ocn/vii5f+2Z8GBAwcOHPc4XkTRt8NHAVYe+/nOhLs9Cw4cOHDguM3xHK5JBLavsoU4OgsOHDhw4PhVjufCaZcsLylx4MCBA8f/y5EfL2kjnh0+p8GBAwcOHL/LsTv+yQdCSWy3HG/qleLAgQMHjqWFhk/++Rf2O3DgwIEDx+DKg60dYk0idnQiHDhw4MCxyvFTUCVHaht8z/e3I6h8JPZiPIYDBw4cOFY52lZaHqj5ICqP7bNPWyvhcODAgQPHuDnYHngyIpqUZy0lDhw4cOC4x5FH12RYdRbJ8xWHBAUHDhw4cOxy5I85K+qSIxWvXg6fIiYcOHDgwHGNY7d51y4rtKzPcZ6/Aw4cOHDgeD/HfKEhHx09v9vZ01+8Aw4cOHDguMyRx1W0iLYUk3kbMS81ceDAgQPHDY78pQ8fVpJNBlSHIzQcOHDgwLHKMXlwW9q1sd0uUuTFHg4cOHDguM3RjnnOCrak9BpFZvAF4MCBAweO93Dkq2w5QVvaJfdPVhyKhQYcOHDgwDHgyBt8eVi2a3Mtx9kIquiV4sCBAweOAcd8PW7OOnmTs3IUBw4cOHDc48ibgG07r238JQOkOkTbsRMOHDhw4FjliIY08Wgnb9LlY602kqOT4sCBAweOVY75klwbjXlwnq0y5A1HHDhw4MBxg+MsRLfCOPnfSWEZrTvgwIEDB45VjmQ80y6fJcOh9q9n46jlKRwOHDhw4Cgn+HnZtjU6mo+azlqQOHDgwIHjHkcbmfmyQtSYi3Engf2i4MSBAwcOHKsc9ZAmXko4K+rOVhwmwyccOHDgwLHL0a4LJK+Vj5fye87KuWhIhgMHDhw4VjnyVzxbKUgicFJGngU5Dhw4cOC4zZEvAUSDnLjAOysdk68nfwoOHDhw4LjB0Q6KbizJ7RaBxQIEDhw4cOBY5fiKr+f78/DefW67Zhf1SnHgwIEDx5gjD7wW4jD8rjUKceDAgQPHOzkOm2urcVvH5CCAceDAgQPHJ3A8R2NbSrVRmi/t5V8tDhw4cOD4TI7nQyZxOC/tcmIcOHDgwPEejrPFghwi//2k/KtDHQcOHDhwXOA4Wyyoi6Vy7HS7NYkDBw4cOG5wuHDgwIEDBw4cOHDgwPFh119mHpaH3Z2uPgAAAABJRU5ErkJggg==">
+              
+            </li>
+          </ul>
+        
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#share_menu', align: 'right'}"><i class="mdui-icon material-icons">share</i></button>
+          <ul class="mdui-menu" id="share_menu">
+            <li class="mdui-menu-item">
+              <a href="https://service.weibo.com/share/share.php?appkey=&title=docker-compose 安装fastdfs&url=https://www.jiamiao.net.cn/2023/10/24/%E6%97%A7%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/&pic=https://www.jiamiao.net.cn/images/favicon.jpg&searchPic=false&style=simple" target="_blank" class="mdui-ripple">分享到 Weibo</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://twitter.com/intent/tweet?text=docker-compose 安装fastdfs&url=https://www.jiamiao.net.cn/2023/10/24/%E6%97%A7%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/&via=杜俊刚" target="_blank" class="mdui-ripple">分享到 Twitter</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.jiamiao.net.cn/2023/10/24/%E6%97%A7%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/" target="_blank" class="mdui-ripple">分享到 Facebook</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://plus.google.com/share?url=https://www.jiamiao.net.cn/2023/10/24/%E6%97%A7%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/" target="_blank" class="mdui-ripple">分享到 Google+</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.jiamiao.net.cn/2023/10/24/%E6%97%A7%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/&title=docker-compose 安装fastdfs" target="_blank" class="mdui-ripple">分享到 LinkedIn</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://connect.qq.com/widget/shareqq/index.html?site=加妙独舞&title=docker-compose 安装fastdfs&pics=https://www.jiamiao.net.cn/images/favicon.jpg&url=https://www.jiamiao.net.cn/2023/10/24/%E6%97%A7%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/" target="_blank" class="mdui-ripple">分享到 QQ</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://telegram.me/share/url?url=https://www.jiamiao.net.cn/2023/10/24/%E6%97%A7%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/&text=docker-compose 安装fastdfs" target="_blank" class="mdui-ripple">分享到 Telegram</a>
+            </li>
+          </ul>
+        
+      </div>
+    </header>
+    <div class="mdui-card-content mdui-typo">
+      <h2 id="1-配置docker-compose-yml">1, 配置docker-compose.yml</h2>
+<p>mkdir -p /opt/fastdfs<br>
+cd /opt/fastdfs<br>
+vi docker-compose.yml</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">version: <span class="string">&#x27;2&#x27;</span></span><br><span class="line">services:</span><br><span class="line">    fastdfs-tracker:</span><br><span class="line">        hostname: fastdfs-tracker</span><br><span class="line">        container_name: fastdfs-tracker</span><br><span class="line">        image: season/fastdfs:1.2</span><br><span class="line">        network_mode: <span class="string">&quot;host&quot;</span></span><br><span class="line">        <span class="built_in">command</span>: tracker</span><br><span class="line">        volumes:</span><br><span class="line">          - ./tracker_data:/fastdfs/tracker/data</span><br><span class="line">    fastdfs-storage:</span><br><span class="line">        hostname: fastdfs-storage</span><br><span class="line">        container_name: fastdfs-storage</span><br><span class="line">        image: season/fastdfs:1.2</span><br><span class="line">        network_mode: <span class="string">&quot;host&quot;</span></span><br><span class="line">        volumes:</span><br><span class="line">          - ./storage_data:/fastdfs/storage/data</span><br><span class="line">          - ./store_path:/fastdfs/store_path</span><br><span class="line">        environment:</span><br><span class="line">          - TRACKER_SERVER=10.33.5.109:22122</span><br><span class="line">        <span class="built_in">command</span>: storage</span><br><span class="line">        depends_on:</span><br><span class="line">          - fastdfs-tracker</span><br><span class="line">    fastdfs-nginx:</span><br><span class="line">        hostname: fastdfs-nginx</span><br><span class="line">        container_name: fastdfs-nginx</span><br><span class="line">        image: season/fastdfs:1.2</span><br><span class="line">        network_mode: <span class="string">&quot;host&quot;</span></span><br><span class="line">        volumes:</span><br><span class="line">          - ./nginx.conf:/etc/nginx/conf/nginx.conf</span><br><span class="line">          - ./store_path:/fastdfs/store_path</span><br><span class="line">        environment:</span><br><span class="line">          - TRACKER_SERVER=10.33.5.109:22122</span><br><span class="line">        <span class="built_in">command</span>: nginx</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="2-编辑-nginx-conf">2, 编辑 nginx.conf</h2>
+<p>vi nginx.conf</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#user  nobody;</span></span><br><span class="line">worker_processes  1;</span><br><span class="line"> </span><br><span class="line"><span class="comment">#error_log  logs/error.log;</span></span><br><span class="line"><span class="comment">#error_log  logs/error.log  notice;</span></span><br><span class="line"><span class="comment">#error_log  logs/error.log  info;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#pid        logs/nginx.pid;</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">#log_format  main  &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span></span><br><span class="line">    <span class="comment">#                  &#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span></span><br><span class="line">    <span class="comment">#                  &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">#access_log  logs/access.log  main;</span></span><br><span class="line"> </span><br><span class="line">    sendfile        on;</span><br><span class="line">    <span class="comment">#tcp_nopush     on;</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">#keepalive_timeout  0;</span></span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">#gzip  on;</span></span><br><span class="line"> </span><br><span class="line">    server &#123;</span><br><span class="line">        listen       7003;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">#charset koi8-r;</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment">#access_log  logs/host.access.log  main;</span></span><br><span class="line"> </span><br><span class="line">        location /group1/M00 &#123;</span><br><span class="line">            root /fastdfs/storage/data;</span><br><span class="line">            ngx_fastdfs_module;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">#error_page  404              /404.html;</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># redirect server error pages to the static page /50x.html</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        error_page   500 502 503 504  /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-启动fastDFS">3, 启动fastDFS</h2>
+<p>docker-compose up -d</p>
+<p>查看容器状态</p>
+<p>docker-compose ps</p>
+<h2 id="4-客户端测试">4, 客户端测试</h2>
+<p>配置客户端访问</p>
+<p>docker run -tid --name fdfs_sh -p 13000:13000 season/fastdfs sh<br>
+docker cp fdfs_sh:/fdfs_conf/client.conf ./</p>
+<p>配置客户端</p>
+<p>vi client.conf</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">base_path=/fastdfs</span><br><span class="line">tracker_server=10.33.5.109:22122</span><br></pre></td></tr></table></figure>
+<p>重新配置客户端容器</p>
+<p>docker rm -f fdfs_sh<br>
+docker run -tid -v /opt/fastdfs/client.conf:/fdfs_conf/client.conf --name fdfs_sh -p 13000:13000 season/fastdfs  sh</p>
+<p>进入容器测试上传文件</p>
+<p>docker exec -it fdfs_sh sh</p>
+<p>生成文件并上传</p>
+<p>echo hello&gt;b.txt<br>
+fdfs_upload_file /fdfs_conf/client.conf /b.txt</p>
+<p>返回的文件地址<br>
+group1/M00/00/00/CiEFbWO_x2WAU2l6AAAABncc3SA269.txt</p>
+<p>浏览器访问地址<br>
+<a target="_blank" rel="noopener" href="http://10.33.5.109:7003/group1/M00/00/00/CiEFbWO_x2WAU2l6AAAABncc3SA269.txt">http://10.33.5.109:7003/group1/M00/00/00/CiEFbWO_x2WAU2l6AAAABncc3SA269.txt</a></p>
+
+      
+      <blockquote>
+        
+          <strong>本文遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">CC BY-NC-SA 4.0</a> 许可协议</strong><br>
+        
+        <strong>本文链接：</strong><br><a href="https://www.jiamiao.net.cn/2023/10/24/%E6%97%A7%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/">https://www.jiamiao.net.cn/2023/10/24/旧版单机fastdfs安装/</a>
+      </blockquote>
+    </div>
+    <footer class="mdui-card-actions">
+      
+      
+        <a class="mdui-ripple article_tags-link" href="/tags/docker/" rel="tag">docker</a><a class="mdui-ripple article_tags-link" href="/tags/fastdfs/" rel="tag">fastdfs</a>
+      
+    </footer>
+    
+  </article>
+  
+<script src="//cdn.bootcdn.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+  <script>$("#main article .mdui-card-content img.fancybox").on("click",function(e){$.fancybox.open({src:$(this).attr("src")});});</script>
+
+
+  <nav id="paginator">
+    
+      <a rel="prev" class="extend prev" href="/2023/10/24/%E6%96%B0%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/">
+        <button aria-label="prev" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_back</i></button>
+        <span class="mdui-p-x-3" mdui-tooltip="{content: '新版单机fastdfs安装'}">上一篇</span>
+      </a>
+    
+    <div class="spacer"></div>
+    
+      <a rel="next" class="extend next" href="/2023/10/24/%E9%83%A8%E7%BD%B2%E9%AB%98%E5%8F%AF%E7%94%A8fastdfs/">
+        <span class="mdui-p-x-3" mdui-tooltip="{content: 'centos7部署高可用fastdfs'}">下一篇</span>
+        <button aria-label="next" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_forward</i></button>
+      </a>
+    
+  </nav>
+
+
+  <div id="comment" class="mdui-m-t-5">
+    <div id="gitalk-container"></div>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: 'jiamiao442.github.io',
+    owner: 'jiamiao442',
+    admin: ['jiamiao442'],
+    id: 'a667d22f-0529-c0ec-06e8-8f475c54b08e' || location.pathname,
+    distractionFreeMode: false
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  </div>
+
+
+
+
+</main>
+  <footer id="footer" class="mdui-m-t-5 mdui-p-y-3 mdui-color-theme">
+  <div class="mdui-p-y-0 mdui-text-center">
+    
+    
+    
+    
+    
+    
+    
+      <a href="https://github.com/jiamiao442" target="_blank" class="mdui-btn mdui-btn-icon mdui-text-color-theme-a100"><i class="mdui-icon iconfont">&#xe7ab;</i></a>
+    
+    
+    
+    
+    
+      <a href="tencent://message/?uin=379289162&Menu=yes" target="_blank" class="mdui-btn mdui-btn-icon mdui-text-color-theme-a100"><i class="mdui-icon iconfont">&#xe651;</i></a>
+    
+    
+  </div>
+  <div class="mdui-p-y-1 mdui-text-center">
+    Copyright &copy; 2023 - 2023 杜俊刚<br>
+    Powered by <a href="https://hexo.io/" target="_blank" class="mdui-text-color-theme-accent">Hexo</a> | Theme - <a href="https://github.com/jiamiao442/jiamiao442.github.io/tree/theme" target="_blank" class="mdui-text-color-theme-accent">default</a> <br/> <img src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png"  style="width: 16px;"> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=13010502002248" target="_blank" class="mdui-text-color-theme-accent">冀公网安备13010502002248号 </a> | <a href="https://beian.miit.gov.cn" target="_blank" class="mdui-text-color-theme-accent">冀ICP备2023036769号</a>
+    <br>
+      <span id="busuanzi_container_site_pv" style="display: none;"><i class="iconfont">&#xe7fd;</i> <span id="busuanzi_value_site_pv"></span></span> &nbsp;&nbsp;
+      <span id="busuanzi_container_site_uv" style="display: none;"><i class="iconfont">&#xe601;</i> <span id="busuanzi_value_site_uv"></span></span>
+    
+  </div>
+</footer>
+
+  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_upward</i></button>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+<script src="/js/mdui.js"></script>
+<script src="/js/script.js"></script>
+
+  
+<script src="/custom.js"></script>
+
+</body>
+</html>

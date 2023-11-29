@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+
+  
+  <title>window下kubectl访问k8s集群 | 加妙独舞</title>
+
+  <link rel="shortcut icon" href="/images/favicon.jpg">
+  <link rel="alternate" href="/atom.xml" title="加妙独舞" type="application/atom+xml">
+  <meta name="description" content="window下kubectl访问k8s集群 1curl.exe -LO &quot;https:&#x2F;&#x2F;dl.k8s.io&#x2F;release&#x2F;v1.28.4&#x2F;bin&#x2F;windows&#x2F;amd64&#x2F;kubectl.exe&quot; git bash 当前我的k8s是v1.20.11 版本所以下载如下 1curl -LO &quot;https:&#x2F;&#x2F;dl.k8s.io&#x2F;release&#x2F;v1.20.11&#x2F;bi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="window下kubectl访问k8s集群">
+<meta property="og:url" content="https://www.jiamiao.net.cn/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/index.html">
+<meta property="og:site_name" content="加妙独舞">
+<meta property="og:description" content="window下kubectl访问k8s集群 1curl.exe -LO &quot;https:&#x2F;&#x2F;dl.k8s.io&#x2F;release&#x2F;v1.28.4&#x2F;bin&#x2F;windows&#x2F;amd64&#x2F;kubectl.exe&quot; git bash 当前我的k8s是v1.20.11 版本所以下载如下 1curl -LO &quot;https:&#x2F;&#x2F;dl.k8s.io&#x2F;release&#x2F;v1.20.11&#x2F;bi">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-29T07:47:45.000Z">
+<meta property="article:modified_time" content="2023-11-29T08:29:24.709Z">
+<meta property="article:author" content="杜俊刚">
+<meta property="article:tag" content="window, kubectl, k8s">
+<meta property="article:tag" content="k8s">
+<meta name="twitter:card" content="summary">
+
+  <meta name="keywords" content=",window, kubectl, k8s,k8s">
+  <meta name="format-detection" content="telephone=no,email=no">
+  <meta name="theme-color" content="#9C27B0">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="加妙独舞">
+  <meta name="msapplication-starturl" content="https://www.jiamiao.net.cn/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/">
+  <meta name="msapplication-navbutton-color" content="#9C27B0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="加妙独舞">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="/images/favicon.jpg">
+
+  
+    <link rel="canonical" href="https://www.jiamiao.net.cn/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/">
+  
+
+  
+  
+
+  
+  
+  
+
+  
+<link rel="stylesheet" href="/css/mdui.css">
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/custom.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-brown mdui-theme-accent-blue">
+  <script>var a=localStorage.getItem("mdui-theme-layout-dark");if(a){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(!a){document.getElementsByTagName("body")[0].className+=" mdui-drawer-body-left"};</script>
+  <header id="header" class="mdui-appbar mdui-appbar-fixed mdui-appbar-scroll-hide mdui-appbar-inset">
+  <div class="mdui-toolbar mdui-color-theme">
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#sidebar', swipe: true}"><i class="mdui-icon material-icons">menu</i></a>
+    <a href="/" class="mdui-typo-headline">加妙独舞</a>
+    <div class="mdui-toolbar-spacer"></div>
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#search'}" mdui-tooltip="{content: '搜索'}"><i class="mdui-icon material-icons">search</i></a>
+    <a href="/atom.xml" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: 'RSS'}"><i class="mdui-icon material-icons">rss_feed</i></a>
+  </div>
+</header>
+<div class="mdui-dialog" id="search">
+  
+    <div class="search-form">
+      <input type="search" class="search-form-input" placeholder="请输入关键字">
+    </div>
+    <div class="search-result" data-resource="/search.xml"></div>
+  
+</div>
+
+  <aside id="sidebar" class="mdui-drawer mdui-drawer-full-height">
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(a){document.getElementById("sidebar").className+=" mdui-drawer-close"};</script>
+  <div class="mdui-grid-tile">
+    <img src="/images/banner.jpg" style="height: 160px;">
+    <img src="/images/avatar.jpg" class="avatar-animation" style="position: absolute; top: 10%; left: 24px; width: 64px; height: 64px; border: 2px solid #fff; border-radius: 50%;">
+    <div class="mdui-grid-tile-actions">
+      <div class="mdui-grid-tile-text">
+        <div class="mdui-grid-tile-title">杜俊刚</div>
+        <div class="mdui-grid-tile-subtitle"><i class="mdui-icon material-icons">art_track</i>桃李不言，下自成蹊</div>
+      </div>
+      
+        <div class="mdui-grid-tile-buttons">
+          <a href="mailto:379289162@qq.com" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '379289162@qq.com'}"><i class="mdui-icon material-icons">email</i></a>
+        </div>
+      
+    </div>
+  </div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    <a href="/" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">home</i>
+      <div class="mdui-list-item-content">主页</div>
+    </a>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-0");if(a){document.getElementsByClassName("mdui-collapse-item")[0].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-deep-orange">archive</i>
+        <div class="mdui-list-item-content">归档</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        <a class="mdui-ripple sidebar_archives-link" href="/archives/2023/11/">十一月 2023<span class="mdui-ripple sidebar_archives-count">2</span></a><a class="mdui-ripple sidebar_archives-link" href="/archives/2023/10/">十月 2023<span class="mdui-ripple sidebar_archives-count">3</span></a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-1");if(a){document.getElementsByClassName("mdui-collapse-item")[1].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-green">class</i>
+        <div class="mdui-list-item-content">分类</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        
+        
+          <a href="javascript:;" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme mdui-ripple" style="justify-content: center;">分类为空</a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-2");if(a){document.getElementsByClassName("mdui-collapse-item")[2].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-brown">bookmark</i>
+        <div class="mdui-list-item-content">标签</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        <a class="mdui-ripple sidebar_archives-link" href="/tags/docker/" rel="tag">docker<span class="mdui-ripple sidebar_archives-count">4</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/fastdfs/" rel="tag">fastdfs<span class="mdui-ripple sidebar_archives-count">3</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/harbor/" rel="tag">harbor<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/http/" rel="tag">http<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/https/" rel="tag">https<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/k8s/" rel="tag">k8s<span class="mdui-ripple sidebar_archives-count">1</span></a><a class="mdui-ripple sidebar_archives-link" href="/tags/window-kubectl-k8s/" rel="tag">window, kubectl, k8s<span class="mdui-ripple sidebar_archives-count">1</span></a>
+        
+      </div>
+    </div>
+    <a href="/about" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-purple">person</i>
+      <div class="mdui-list-item-content">关于</div>
+    </a>
+  </div>
+
+  <div class="mdui-divider"></div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    
+      <a href="/timeline" class="mdui-list-item mdui-ripple">时间轴</a>
+    
+      <a href="/tagcloud" class="mdui-list-item mdui-ripple">标签云</a>
+    
+      <a href="/gallery" class="mdui-list-item mdui-ripple">相册</a>
+    
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-3");if(a){document.getElementsByClassName("mdui-collapse-item")[3].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <div class="mdui-list-item-content">友情链接</div>
+        <i class="mdui-list-item-icon mdui-icon material-icons">link</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+          <a href="//www.hao123.com" target="_blank" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme-accent mdui-ripple" style="justify-content: center;">hao123</a>
+        
+        
+      </div>
+    </div>
+  </div>
+</aside>
+
+  <main id="main" class="mdui-m-t-5 fadeIn animated">
+  
+<link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <style>#main article .mdui-card-content .center-block{display:block!important;margin-right:auto!important;margin-left:auto!important}</style>
+  <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
+  <article class="mdui-card mdui-m-b-5">
+    <header class="mdui-card-media">
+      <img src="/images/random/material-16.png" style="max-height: 240px;">
+      <div class="mdui-card-media-covered">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">window下kubectl访问k8s集群</div>
+          <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2023-11-29 / <i class="iconfont">&#xe601;</i> 杜俊刚 &nbsp;&nbsp; <span id="busuanzi_container_page_pv" style="display: none;"><i class="iconfont">&#xe7fd;</i> <span id="busuanzi_value_page_pv"></span></span></div>
+        </div>
+      </div>
+      <div class="mdui-card-menu">
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#qrcode', align: 'right'}"><i class="mdui-icon material-icons">devices</i></button>
+          <ul class="mdui-menu" id="qrcode">
+            
+              <li class="mdui-menu-item"><a class="mdui-text-center mdui-ripple">发送到手机</a></li>
+            
+            <li class="mdui-menu-item" disabled>
+              
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEKElEQVR42u3aS27jMBAFwNz/0pntAInt97oV2KaLq8CKRKq0IPvz9W0E4wsBJkyYMGHCZGDChAnTyzN9xeP//7/1hJ+//zL9jSfnz7y/np+/t++ICRMmTJjOY3qwNd5d7lVXk7vuQyT/WbwjJkyYMGE6jqk9BNzfvKPwcnQEuWq1D+7ChAkTJkwfyZQA3f+fNuhNPkMyIyZMmDBhwpQzteFum1bOE8rtczBhwoQJ0ycz5dttm/ydHQg2h5In58IxYcKECdOLMc026ff6+2n9TZgwYcKE6alMswJkEtYmIWseGLftO/uBCRMmTJjOYLq/3CQcnaV92+05D7bbFPAqQ4AJEyZMmF6eKW+XyRfRpoBbgll5NS+4YsKECROmU5mSMLVtrJmlZfPwuD3KFIVVTJgwYcJ0HFOehE02+DY1nLO2vwxbeTBhwoQJ0xFMyRJngWV+sGjLk5ukcDELJkyYMGE6iKlNp8426X2Zs/207YfEhAkTJkznMc2Kf7NQOd/Oc+jNLKsMASZMmDBheiumNhV7WSI1buJp08HtXL/8jgkTJkyYjmPKC4ptOji/t20M2qSVH1zFhAkTJkxHMLWvvS9qzhqDctA2DV1XfTFhwoQJ01sx7QPRukw4S7nGxdQ2eB4meTFhwoQJ01sxXdUi8z0a+3v3yV9MmDBhwnQ20yyUzRtD96FyPstmPZgwYcKE6WymJDTdv3b7/E0COocuDgSYMGHChOltmfZLzFOubXtNHpDviTFhwoQJ00lM+XKTKdugdLNhz5LO+XowYcKECdN5TPtUbHI1n2VWUr0qFMeECRMmTOcxzbbSdun5Rp4XINtQPLqKCRMmTJiOYJoFtJtQM5mlbdPJDyXFCjFhwoQJ0xFM+Wvnge6sPJnMmG/nm/IqJkyYMGE6iakt+M2Swm25dLadt+lgTJgwYcL0OUxty85+ufnBYrad52nom2+ECRMmTJiOY0o27zZp2x448tTtDDc5ZGDChAkTpvOY/vq12yLo7Gl50Bu9FyZMmDBhOo5pE/S2id1ZmbNtHmo/ISZMmDBhOpVp1myah6x5ULpplm3X+YAYEyZMmDAdxDQrT6622xI9Se+273VZhgATJkyYML08UzJ9sj3nr5E398zaVdtPjgkTJkyYTmWacQy32JK1LVW2B4gHHxITJkyYMB3B1I598Dmj3IfleTobEyZMmDCdxLTfpK96Qh4At0nkYSCNCRMmTJgOYtqUAK9K8uYF0Za4TQRjwoQJE6ZTmdoG0M2W/xdJ3nY8mAUTJkyYMH0k0+zefJufMeUHmvxeTJgwYcL0yUybwHLWdjM7sswajzBhwoQJ06lMbZPNLGnbNtzkyeINFiZMmDBhOpupTYm2wWq7nc+uzj5PUc7EhAkTJkxvyGREBwIDEyZMmDBhwmRgwoTpVcY/iAL3dxrSZ0AAAAAASUVORK5CYII=">
+              
+            </li>
+          </ul>
+        
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#share_menu', align: 'right'}"><i class="mdui-icon material-icons">share</i></button>
+          <ul class="mdui-menu" id="share_menu">
+            <li class="mdui-menu-item">
+              <a href="https://service.weibo.com/share/share.php?appkey=&title=window下kubectl访问k8s集群&url=https://www.jiamiao.net.cn/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/&pic=https://www.jiamiao.net.cn/images/favicon.jpg&searchPic=false&style=simple" target="_blank" class="mdui-ripple">分享到 Weibo</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://twitter.com/intent/tweet?text=window下kubectl访问k8s集群&url=https://www.jiamiao.net.cn/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/&via=杜俊刚" target="_blank" class="mdui-ripple">分享到 Twitter</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.jiamiao.net.cn/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/" target="_blank" class="mdui-ripple">分享到 Facebook</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://plus.google.com/share?url=https://www.jiamiao.net.cn/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/" target="_blank" class="mdui-ripple">分享到 Google+</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.jiamiao.net.cn/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/&title=window下kubectl访问k8s集群" target="_blank" class="mdui-ripple">分享到 LinkedIn</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://connect.qq.com/widget/shareqq/index.html?site=加妙独舞&title=window下kubectl访问k8s集群&pics=https://www.jiamiao.net.cn/images/favicon.jpg&url=https://www.jiamiao.net.cn/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/" target="_blank" class="mdui-ripple">分享到 QQ</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://telegram.me/share/url?url=https://www.jiamiao.net.cn/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/&text=window下kubectl访问k8s集群" target="_blank" class="mdui-ripple">分享到 Telegram</a>
+            </li>
+          </ul>
+        
+      </div>
+    </header>
+    <div class="mdui-card-content mdui-typo">
+      <h1>window下kubectl访问k8s集群</h1>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl.exe -LO <span class="string">&quot;https://dl.k8s.io/release/v1.28.4/bin/windows/amd64/kubectl.exe&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="git-bash">git bash</h2>
+<p>当前我的k8s是v1.20.11 版本所以下载如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -LO <span class="string">&quot;https://dl.k8s.io/release/v1.20.11/bin/windows/amd64/kubectl.exe&quot;</span></span><br></pre></td></tr></table></figure>
+<p>放入 gitbash 家目录的bin下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\git\Git\mingw64\bin</span><br></pre></td></tr></table></figure>
+<p>然后导入配置文件，就可以访问集群了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">export kubeconfig=./config</span><br><span class="line">$ kubectl version</span><br><span class="line">Client Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;20&quot;, GitVersion:&quot;v1.20.11&quot;, GitCommit:&quot;27522a29febbcc4badac257763044d0d90c11abd&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2021-09-15T19:21:44Z&quot;, GoVersion:&quot;go1.15.15&quot;, Compiler:&quot;gc&quot;, Platform:&quot;windows/amd64&quot;&#125;</span><br><span class="line">Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;20&quot;, GitVersion:&quot;v1.20.11&quot;, GitCommit:&quot;27522a29febbcc4badac257763044d0d90c11abd&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2021-09-15T19:16:25Z&quot;, GoVersion:&quot;go1.15.15&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br><span class="line"></span><br><span class="line">$ kubectl get nodes</span><br><span class="line">NAME                  STATUS   ROLES                      AGE    VERSION</span><br><span class="line">fastdfs02             Ready    worker                     35d    v1.20.11</span><br><span class="line">k8s-master01          Ready    controlplane,etcd,worker   298d   v1.20.11</span><br><span class="line">k8s-master02          Ready    controlplane,etcd,worker   298d   v1.20.11</span><br><span class="line">k8s-master03          Ready    controlplane,etcd,worker   298d   v1.20.11</span><br><span class="line">node-jenkins-master   Ready    worker                     287d   v1.20.11</span><br><span class="line">node01                Ready    worker                     298d   v1.20.11</span><br><span class="line">node02                Ready    worker                     298d   v1.20.11</span><br><span class="line">node03                Ready    worker                     298d   v1.20.11</span><br><span class="line">node04                Ready    worker                     298d   v1.20.11</span><br><span class="line">node05                Ready    worker                     225d   v1.20.11</span><br><span class="line">node6                 Ready    worker                     176d   v1.20.11</span><br><span class="line">sky-es01              Ready    worker                     40d    v1.20.11</span><br><span class="line">sky-es02              Ready    worker                     40d    v1.20.11</span><br><span class="line">sky-es03              Ready    worker                     40d    v1.20.11</span><br></pre></td></tr></table></figure>
+
+      
+      <blockquote>
+        
+          <strong>本文遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">CC BY-NC-SA 4.0</a> 许可协议</strong><br>
+        
+        <strong>本文链接：</strong><br><a href="https://www.jiamiao.net.cn/2023/11/29/window%E4%B8%8B%E9%80%9A%E8%BF%87kubectl%E8%AE%BF%E9%97%AEk8s%E9%9B%86%E7%BE%A4/">https://www.jiamiao.net.cn/2023/11/29/window下通过kubectl访问k8s集群/</a>
+      </blockquote>
+    </div>
+    <footer class="mdui-card-actions">
+      
+      
+        <a class="mdui-ripple article_tags-link" href="/tags/k8s/" rel="tag">k8s</a><a class="mdui-ripple article_tags-link" href="/tags/window-kubectl-k8s/" rel="tag">window, kubectl, k8s</a>
+      
+    </footer>
+    
+  </article>
+  
+<script src="//cdn.bootcdn.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+  <script>$("#main article .mdui-card-content img.fancybox").on("click",function(e){$.fancybox.open({src:$(this).attr("src")});});</script>
+
+
+  <nav id="paginator">
+    
+      <a rel="prev" class="extend prev" href="/2023/11/29/harbor-%E4%BB%8Ehttp%E5%8D%87%E7%BA%A7%E5%88%B0https/">
+        <button aria-label="prev" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_back</i></button>
+        <span class="mdui-p-x-3" mdui-tooltip="{content: '生产中harbor从http升级到https'}">上一篇</span>
+      </a>
+    
+    <div class="spacer"></div>
+    
+      <a rel="next" class="extend next" href="/2023/10/24/%E6%96%B0%E7%89%88%E5%8D%95%E6%9C%BAfastdfs%E5%AE%89%E8%A3%85/">
+        <span class="mdui-p-x-3" mdui-tooltip="{content: '新版单机fastdfs安装'}">下一篇</span>
+        <button aria-label="next" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_forward</i></button>
+      </a>
+    
+  </nav>
+
+
+  <div id="comment" class="mdui-m-t-5">
+    <div id="gitalk-container"></div>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: 'jiamiao442.github.io',
+    owner: 'jiamiao442',
+    admin: ['jiamiao442'],
+    id: '12d52074-cb7d-9dc0-f2dc-03f216abce3b' || location.pathname,
+    distractionFreeMode: false
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  </div>
+
+
+
+
+</main>
+  <footer id="footer" class="mdui-m-t-5 mdui-p-y-3 mdui-color-theme">
+  <div class="mdui-p-y-0 mdui-text-center">
+    
+    
+    
+    
+    
+    
+    
+      <a href="https://github.com/jiamiao442" target="_blank" class="mdui-btn mdui-btn-icon mdui-text-color-theme-a100"><i class="mdui-icon iconfont">&#xe7ab;</i></a>
+    
+    
+    
+    
+    
+      <a href="tencent://message/?uin=379289162&Menu=yes" target="_blank" class="mdui-btn mdui-btn-icon mdui-text-color-theme-a100"><i class="mdui-icon iconfont">&#xe651;</i></a>
+    
+    
+  </div>
+  <div class="mdui-p-y-1 mdui-text-center">
+    Copyright &copy; 2023 - 2023 杜俊刚<br>
+    Powered by <a href="https://hexo.io/" target="_blank" class="mdui-text-color-theme-accent">Hexo</a> | Theme - <a href="https://github.com/jiamiao442/jiamiao442.github.io/tree/theme" target="_blank" class="mdui-text-color-theme-accent">default</a> <br/> <img src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png"  style="width: 16px;"> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=13010502002248" target="_blank" class="mdui-text-color-theme-accent">冀公网安备13010502002248号 </a> | <a href="https://beian.miit.gov.cn" target="_blank" class="mdui-text-color-theme-accent">冀ICP备2023036769号</a>
+    <br>
+      <span id="busuanzi_container_site_pv" style="display: none;"><i class="iconfont">&#xe7fd;</i> <span id="busuanzi_value_site_pv"></span></span> &nbsp;&nbsp;
+      <span id="busuanzi_container_site_uv" style="display: none;"><i class="iconfont">&#xe601;</i> <span id="busuanzi_value_site_uv"></span></span>
+    
+  </div>
+</footer>
+
+  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_upward</i></button>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+<script src="/js/mdui.js"></script>
+<script src="/js/script.js"></script>
+
+  
+<script src="/custom.js"></script>
+
+</body>
+</html>
