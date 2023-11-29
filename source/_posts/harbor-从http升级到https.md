@@ -1,4 +1,5 @@
 # 生产中harbor从http升级到https
+uuid: 76fb5d96-c0db-32f4-22be-56f383ae5f8e
 uuid: 3243ffa6-3633-5960-37d6-508884b74b2e
 uuid: d9d2b93c-d463-406d-50a1-1899d6204d80
 uuid: 8dacad47-c5cb-b0fb-9c3c-df9bca25099e
