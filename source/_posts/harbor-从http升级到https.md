@@ -1,4 +1,13 @@
-﻿# 生产中harbor从http升级到https
+---
+uuid: b9bceb46-0d45-1083-4e83-b2b12a0c4f1e
+title: 生产中harbor从http升级到https
+date: 2023-11-29 15:47:45
+tags: 
+- harbor
+- http
+- https
+---
+# 生产中harbor从http升级到https
 
 ##  Generate a Certificate Authority Certificate
 
