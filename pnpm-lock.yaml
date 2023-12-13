@@ -15,8 +15,8 @@ dependencies:
     specifier: ^2.0.2
     version: 2.0.2
   babel-plugin-inferno:
-    specifier: ^6.7.0
-    version: 6.7.0(@babel/core@7.23.2)
+    specifier: ^6.7.1
+    version: 6.7.1(@babel/core@7.23.2)
   hexo:
     specifier: ^6.3.0
     version: 6.3.0
@@ -1440,8 +1440,8 @@ packages:
     resolution: {integrity: sha512-iAB+JbDEGXhyIUavoDl9WP/Jj106Kz9DEn1DPgYw5ruDn0e3Wgi3sKFm55sASdGBNOQB8F59d9qQ7deqrHA8wQ==}
     dev: false
 
-  /babel-plugin-inferno@6.7.0(@babel/core@7.23.2):
-    resolution: {integrity: sha512-CLDNIoctex09NRbPP3GOq+B18Tj0luQOOevTAQzKWkwa45SqeoeFCY1XBq7p2TXrmifUAXbuCRrFKmA05codAA==}
+  /babel-plugin-inferno@6.7.1(@babel/core@7.23.2):
+    resolution: {integrity: sha512-PE21ZL2ABgQUKdOehlrSrmT/pPSUqp1ASzwKmAzvB2gg7gLHdhJbCh4cKmjF2w1nwKcil+lGr5WutTpbLDt+YA==}
     engines: {node: '>=6'}
     dependencies:
       '@babel/plugin-syntax-jsx': 7.22.5(@babel/core@7.23.2)
@@ -2222,7 +2222,7 @@ packages:
     resolution: {integrity: sha512-XGqCaTUr6+X8Ty/YvRi+0eh0DJgHcp+lgBhn+Sgyh6ev40P0cwamwJyaZroTdHt8GPoBwbSGVu0H/CdzEf0lFA==}
     dependencies:
       hexo-util: 3.1.0
-      keyword-extractor: 0.0.27
+      keyword-extractor: 0.0.28
       moment: 2.29.4
     dev: false
 
@@ -2306,7 +2306,7 @@ packages:
       '@babel/core': 7.23.2
       '@babel/preset-env': 7.23.2(@babel/core@7.23.2)
       '@babel/register': 7.22.15(@babel/core@7.23.2)
-      babel-plugin-inferno: 6.7.0(@babel/core@7.23.2)
+      babel-plugin-inferno: 6.7.1(@babel/core@7.23.2)
       inferno: 7.4.11
       inferno-create-element: 7.4.11
       inferno-server: 7.4.11
@@ -2701,8 +2701,8 @@ packages:
       commander: 8.3.0
     dev: false
 
-  /keyword-extractor@0.0.27:
-    resolution: {integrity: sha512-xb5MIKz+vbtsEhUWi25jACtedcrcHEXGewlrQ4Sk5uzntEMXQ3npqo0rRiPLa1jYxFrCq+XVzrgd3TUELjDfaQ==}
+  /keyword-extractor@0.0.28:
+    resolution: {integrity: sha512-oi7dSPpYtW/3fE0vZiqQgZ8mW3F1V9K4+rBJ0FcVrdXBEQuhZ0zKj7sX74eqGASuepLHf9aYdeonyKHWhYpHQA==}
     engines: {node: '>= 0.10.0'}
     dev: false
 
