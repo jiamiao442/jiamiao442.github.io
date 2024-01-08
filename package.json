@@ -18,7 +18,7 @@
     "babel-plugin-inferno": "^6.7.0",
     "hexo": "^6.3.0",
     "hexo-autonofollow": "^1.0.1",
-    "hexo-component-inferno": "^2.0.2",
+    "hexo-component-inferno": "^2.0.4",
     "hexo-deployer-git": "^3.0.0",
     "hexo-enhancer": "^1.0.10",
     "hexo-fs": "^4.1.1",
