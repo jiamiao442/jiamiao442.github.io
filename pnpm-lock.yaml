@@ -72,8 +72,8 @@ dependencies:
     specifier: ^1.6.0
     version: 1.6.0(@types/markdown-it@13.0.5)
   hexo-renderer-markdown-it:
-    specifier: ^7.1.0
-    version: 7.1.0
+    specifier: ^7.1.1
+    version: 7.1.1
   hexo-renderer-stylus:
     specifier: ^3.0.0
     version: 3.0.0
@@ -2222,8 +2222,8 @@ packages:
     resolution: {integrity: sha512-XGqCaTUr6+X8Ty/YvRi+0eh0DJgHcp+lgBhn+Sgyh6ev40P0cwamwJyaZroTdHt8GPoBwbSGVu0H/CdzEf0lFA==}
     dependencies:
       hexo-util: 3.1.0
-      keyword-extractor: 0.0.27
-      moment: 2.29.4
+      keyword-extractor: 0.0.28
+      moment: 2.30.1
     dev: false
 
   /hexo-generator-search@2.4.3:
@@ -2314,8 +2314,8 @@ packages:
       - supports-color
     dev: false
 
-  /hexo-renderer-markdown-it@7.1.0:
-    resolution: {integrity: sha512-CQK7/kvhWbpKzXOSTpSuANVKgOZjPzxkPna4IQ6xMnRqsNpVXNSzpn5Ke1QEVH2x6FJB1/Vf7B40sJVxQKagaw==}
+  /hexo-renderer-markdown-it@7.1.1:
+    resolution: {integrity: sha512-BxI2j2f/l7lOgb7DiT1M4GcP/QhR8/rjMlYx4MEPog/9NTpYhbaspiVsw3tGXOsZVmu+cVgBYoeyIQsFYvv3rw==}
     engines: {node: '>=14'}
     dependencies:
       hexo-util: 3.1.0
@@ -2701,8 +2701,8 @@ packages:
       commander: 8.3.0
     dev: false
 
-  /keyword-extractor@0.0.27:
-    resolution: {integrity: sha512-xb5MIKz+vbtsEhUWi25jACtedcrcHEXGewlrQ4Sk5uzntEMXQ3npqo0rRiPLa1jYxFrCq+XVzrgd3TUELjDfaQ==}
+  /keyword-extractor@0.0.28:
+    resolution: {integrity: sha512-oi7dSPpYtW/3fE0vZiqQgZ8mW3F1V9K4+rBJ0FcVrdXBEQuhZ0zKj7sX74eqGASuepLHf9aYdeonyKHWhYpHQA==}
     engines: {node: '>= 0.10.0'}
     dev: false
 
@@ -3006,6 +3006,10 @@ packages:
 
   /moment@2.29.4:
     resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
+    dev: false
+
+  /moment@2.30.1:
+    resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
     dev: false
 
   /morgan@1.10.0:
