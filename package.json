@@ -16,7 +16,7 @@
     "@types/markdown-it": "^13.0.5",
     "@upupming/hexo-renderer-markdown-it-plus": "^2.0.2",
     "babel-plugin-inferno": "^6.7.0",
-    "hexo": "^6.3.0",
+    "hexo": "^7.1.0",
     "hexo-autonofollow": "^1.0.1",
     "hexo-component-inferno": "^2.0.2",
     "hexo-deployer-git": "^3.0.0",
